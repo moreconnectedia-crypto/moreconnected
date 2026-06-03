@@ -535,7 +535,7 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.25); }
   <h1>
     ¿Tu negocio ya está<br>
     en el <span class="highlight">mundo</span><br>
-    <span class="accent">digital?</span>
+<span class="accent" id="typed-word">digital?</span>
   </h1>
   <p class="hero-sub">Estar en internet no es un lujo, es una necesidad. Te ayudamos a dar el salto digital con soluciones simples y precios que se adaptan a ti.</p>
   <div class="hero-actions">
@@ -711,6 +711,32 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.25); }
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+  // Texto animado hero
+const words = ['digital?', 'conectado?', 'visible?', 'moderno?'];
+let i = 0, j = 0, deleting = false;
+const el = document.getElementById('typed-word');
+
+function type() {
+  const word = words[i];
+  if (!deleting) {
+    el.textContent = word.substring(0, j + 1);
+    j++;
+    if (j === word.length) {
+      deleting = true;
+      setTimeout(type, 1800);
+      return;
+    }
+  } else {
+    el.textContent = word.substring(0, j - 1);
+    j--;
+    if (j === 0) {
+      deleting = false;
+      i = (i + 1) % words.length;
+    }
+  }
+  setTimeout(type, deleting ? 60 : 100);
+}
+type();
 </script>
 <!-- FLOATING BUTTONS -->
 <style>
