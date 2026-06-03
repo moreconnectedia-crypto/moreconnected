@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>moreconnected.ia — Servicios Digitales</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1A1560;
+  --navy-dark: #0F0E3A;
+  --teal: #00CEC9;
+  --teal-soft: #00B5B1;
+  --orange: #F9A825;
+  --white: #FFFFFF;
+  --text-muted: rgba(255,255,255,0.6);
+  --text-faint: rgba(255,255,255,0.3);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy-dark);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 5vw;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(15,14,58,0.9);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,206,201,0.15);
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-cta {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 22px;
+  background: var(--teal);
+  color: var(--navy-dark);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 5vw 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,206,201,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(249,168,37,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,206,201,0.1);
+  border: 1px solid rgba(0,206,201,0.3);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  width: fit-content;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.2s forwards;
+}
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 780px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.35s forwards;
+}
+.hero h1 .highlight { color: var(--teal); }
+.hero h1 .accent { color: var(--orange); }
+.hero-sub {
+  margin-top: 1.75rem;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.7;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.5s forwards;
+}
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.65s forwards;
+}
+.btn-primary {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500;
+  padding: 14px 30px;
+  background: var(--orange);
+  color: var(--navy-dark);
+  border: none; border-radius: 100px;
+  cursor: pointer; text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-outline {
+  font-size: 14px;
+  padding: 13px 28px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  border-radius: 100px;
+  cursor: pointer; text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+.slogan {
+  margin-top: 4rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.8s forwards;
+}
+
+/* ── HERO VISUAL ── */
+.hero-visual {
+  position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
+  width: 300px;
+  opacity: 0;
+  animation: fadeIn 1s 0.9s forwards;
+}
+.floating-cards {
+  position: relative; width: 100%; height: 300px;
+}
+.fcard {
+  position: absolute;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,206,201,0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  backdrop-filter: blur(8px);
+}
+.fcard-1 { width: 180px; top: 0; left: 20px; animation: float1 4s ease-in-out infinite; }
+.fcard-2 { width: 160px; top: 90px; right: 0; animation: float2 5s ease-in-out infinite; }
+.fcard-3 { width: 150px; bottom: 10px; left: 0; animation: float3 4.5s ease-in-out infinite; }
+.fcard-label { font-size: 10px; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+.fcard-title { font-size: 13px; font-weight: 500; }
+.fcard-bar { height: 3px; background: rgba(0,206,201,0.2); border-radius: 2px; margin-top: 8px; }
+.fcard-bar-fill { height: 100%; border-radius: 2px; background: var(--teal); }
+
+/* ── SERVICIOS ── */
+.section { padding: 100px 5vw; }
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 3.5rem;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.service-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,206,201,0.15);
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  cursor: default;
+}
+.service-card:hover {
+  background: rgba(0,206,201,0.06);
+  border-color: rgba(0,206,201,0.4);
+  transform: translateY(-3px);
+}
+.service-icon {
+  font-size: 28px;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+.service-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.service-card p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ── PORTAFOLIO QR ── */
+.portfolio-section { padding: 100px 5vw; }
+.portfolio-entries { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 2rem; }
+
+.portfolio-entry {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,206,201,0.18);
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  transition: border-color 0.3s, background 0.3s;
+}
+.portfolio-entry:hover {
+  border-color: rgba(0,206,201,0.4);
+  background: rgba(0,206,201,0.04);
+}
+
+.phone-wrap { flex-shrink: 0; display: flex; justify-content: center; }
+.phone-frame {
+  width: 155px;
+  border: 2px solid rgba(0,206,201,0.3);
+  border-radius: 28px;
+  background: rgba(8,7,45,0.95);
+  padding: 14px 12px;
+  box-shadow: 0 8px 40px rgba(0,206,201,0.12), 0 0 0 1px rgba(0,206,201,0.06);
+}
+.phone-notch {
+  width: 42px; height: 4px;
+  background: rgba(0,206,201,0.2);
+  border-radius: 2px;
+  margin: 0 auto 14px;
+}
+.pm-header {
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,206,201,0.15);
+  margin-bottom: 10px;
+}
+.pm-header-name {
+  font-size: 9.5px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+.pm-header-sub { font-size: 7.5px; color: var(--teal); margin-top: 3px; letter-spacing: 0.04em; }
+.pm-cat {
+  font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--orange); margin: 10px 0 5px;
+}
+.pm-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 3.5px 0;
+}
+.pm-bar { height: 5px; background: rgba(255,255,255,0.12); border-radius: 3px; }
+.pm-price { height: 5px; width: 22px; background: rgba(0,206,201,0.28); border-radius: 3px; flex-shrink: 0; }
+.pm-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 8px 0; }
+.pm-footer {
+  text-align: center;
+  font-size: 7.5px;
+  color: rgba(0,206,201,0.55);
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(0,206,201,0.1);
+}
+
+.portfolio-info { }
+.portfolio-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 1rem;
+}
+.portfolio-tag::before {
+  content: ''; width: 5px; height: 5px; background: var(--teal); border-radius: 50%;
+}
+.portfolio-entry h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700; letter-spacing: -0.025em;
+  color: var(--white); margin-bottom: 0.3rem;
+}
+.biz-type { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
+.biz-desc {
+  font-size: 14.5px; color: var(--text-muted); line-height: 1.8;
+  max-width: 540px; margin-bottom: 1.75rem;
+}
+.biz-desc strong { color: var(--white); font-weight: 500; }
+
+.portfolio-badges { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.75rem; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 13px;
+  border-radius: 100px;
+  font-size: 11.5px; font-weight: 500;
+  border: 1px solid;
+}
+.badge-teal { border-color: rgba(0,206,201,0.3); color: var(--teal); background: rgba(0,206,201,0.06); }
+.badge-orange { border-color: rgba(249,168,37,0.3); color: var(--orange); background: rgba(249,168,37,0.06); }
+.badge::before { content: '✓'; font-size: 9px; opacity: 0.75; }
+
+.btn-see-card {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 26px;
+  background: rgba(0,206,201,0.08);
+  border: 1px solid rgba(0,206,201,0.3);
+  color: var(--teal);
+  border-radius: 100px;
+  font-size: 13px; font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.btn-see-card:hover {
+  background: rgba(0,206,201,0.16);
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+.btn-see-card-arrow { font-size: 15px; line-height: 1; }
+
+@media (max-width: 768px) {
+  .portfolio-entry {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    gap: 2rem;
+  }
+}
+
+/* ── POR QUÉ ── */
+.why-section {
+  padding: 100px 5vw;
+  background: rgba(0,206,201,0.03);
+  border-top: 1px solid rgba(0,206,201,0.1);
+  border-bottom: 1px solid rgba(0,206,201,0.1);
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+.why-item { }
+.why-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--orange);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.why-item h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0.5rem 0 0.4rem;
+}
+.why-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* ── CTA ── */
+.cta-section {
+  padding: 120px 5vw;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(0,206,201,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-width: 580px;
+  margin: 0 auto 1rem;
+  line-height: 1.1;
+}
+.cta-section p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 400px;
+  margin: 0 auto 2.5rem;
+}
+.cta-section .btn-primary { font-size: 15px; padding: 16px 36px; }
+.cta-contact {
+  display: block;
+  margin-top: 0;
+  font-size: 13px;
+  color: var(--text-faint);
+}
+.cta-contact a { color: var(--teal); text-decoration: none; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem 5vw;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: rgba(255,255,255,0.4);
+}
+.footer-logo span { color: var(--orange); }
+footer p { font-size: 12px; color: rgba(255,255,255,0.25); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none; }
+.footer-links a:hover { color: var(--teal); }
+
+/* ── ANIMS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.9; }
+}
+@keyframes float1 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes float2 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes float3 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.reveal {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  .hero-visual, .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">moreconnected<span>.ia</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#por-que">Por qué nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Escríbenos</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Servicios Digitales</div>
+  <h1>
+    ¿Tu negocio ya está<br>
+    en el <span class="highlight">mundo</span><br>
+    <span class="accent">digital?</span>
+  </h1>
+  <p class="hero-sub">Estar en internet no es un lujo, es una necesidad. Te ayudamos a dar el salto digital con soluciones simples y precios que se adaptan a ti.</p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">¡Escríbenos hoy!</a>
+    <a href="#servicios" class="btn-outline">Ver servicios</a>
+  </div>
+  <p class="slogan">soluciones simples para negocios reales</p>
+
+  <div class="hero-visual">
+    <div class="floating-cards">
+      <div class="fcard fcard-1">
+        <div class="fcard-label">Sitio web</div>
+        <div class="fcard-title">Tu negocio online</div>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="fcard fcard-2">
+        <div class="fcard-label">Inventario</div>
+        <div class="fcard-title">Stock en control</div>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="fcard fcard-3">
+        <div class="fcard-label">Carta QR</div>
+        <div class="fcard-title">Menú digital</div>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section" id="servicios">
+  <p class="section-label reveal">¿Qué podemos hacer por tu negocio?</p>
+  <h2 class="section-title reveal">Servicios digitales<br>para negocios reales</h2>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">🌐</span>
+      <h3>Sitios web</h3>
+      <p>Creamos páginas modernas y profesionales para que tu negocio tenga presencia online y atraiga más clientes.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">📋</span>
+      <h3>Diseño de cartas QR y físicas</h3>
+      <p>Diseñamos cartas digitales y físicas con estilo moderno, fáciles de usar y adaptadas a tu negocio.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">📦</span>
+      <h3>Software control de inventario</h3>
+      <p>Implementamos sistemas simples para controlar stock, ventas y productos de forma eficiente.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🚀</span>
+      <h3>Asesoría para digitalización</h3>
+      <p>Te ayudamos a modernizar tu empresa con herramientas digitales prácticas y fáciles de implementar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAFOLIO QR -->
+<section class="portfolio-section" id="portafolio">
+  <p class="section-label reveal">Cartas QR · Portafolio</p>
+  <h2 class="section-title reveal">Proyectos realizados</h2>
+
+  <div class="portfolio-entries">
+
+    <!-- Cafetería La Fama -->
+    <div class="portfolio-entry reveal">
+
+      <!-- Phone mockup -->
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="pm-header">
+            <div class="pm-header-name">☕ Cafetería La Fama</div>
+            <div class="pm-header-sub">Pastelería &amp; Cafetería</div>
+          </div>
+          <div class="pm-cat">Bebidas</div>
+          <div class="pm-row"><div class="pm-bar" style="width:68%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-row"><div class="pm-bar" style="width:52%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-row"><div class="pm-bar" style="width:74%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-divider"></div>
+          <div class="pm-cat">Pasteles</div>
+          <div class="pm-row"><div class="pm-bar" style="width:80%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-row"><div class="pm-bar" style="width:58%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-row"><div class="pm-bar" style="width:65%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-divider"></div>
+          <div class="pm-cat">Desayunos</div>
+          <div class="pm-row"><div class="pm-bar" style="width:72%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-row"><div class="pm-bar" style="width:48%;flex:none;"></div><div class="pm-price"></div></div>
+          <div class="pm-footer">ver carta completa →</div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Carta QR Digital</div>
+        <h3>Cafetería La Fama</h3>
+        <p class="biz-type">Pastelería &amp; Cafetería</p>
+        <p class="biz-desc">
+          Se realizó un <strong>acompañamiento completo</strong> a esta pastelería y cafetería, cuidando cada detalle desde la estructura, los colores y la tipografía hasta la presentación de cada producto. La carta fue construida <strong>desde cero</strong> y en <strong>menos de 48 horas</strong> ya estaba lista para recibir a sus primeros clientes.
+        </p>
+        <div class="portfolio-badges">
+          <span class="badge badge-orange">Desde cero</span>
+          <span class="badge badge-teal">Menos de 48 horas</span>
+          <span class="badge badge-teal">Acompañamiento completo</span>
+          <span class="badge badge-teal">Cada detalle cuidado</span>
+        </div>
+        <a href="https://carta.avocaty.io/cafeteria-la-fama" target="_blank" rel="noopener" class="btn-see-card">
+          Ver la carta <span class="btn-see-card-arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section class="why-section" id="por-que">
+  <p class="section-label reveal">¿Por qué elegirnos?</p>
+  <h2 class="section-title reveal">Precios que se adaptan<br>a tu negocio</h2>
+  <p class="reveal" style="color: var(--text-muted); max-width:480px; font-size:15px; line-height:1.7; margin-top:-2rem; margin-bottom:0;">Precios accesibles para impulsar tu negocio, sin letra chica ni costos ocultos.</p>
+
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-num">100%</div>
+      <h4>Adaptado a ti</h4>
+      <p>Cada solución se diseña según las necesidades reales de tu negocio.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">Simple</div>
+      <h4>Fácil de usar</h4>
+      <p>Sin complicaciones técnicas. Todo pensado para que tú lo puedas manejar.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">Rápido</div>
+      <h4>Entrega ágil</h4>
+      <p>Tiempos de entrega cortos para que tu negocio no pierda tiempo.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">Cerca</div>
+      <h4>Soporte continuo</h4>
+      <p>Estamos disponibles para ayudarte antes, durante y después del proyecto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacto">
+  <h2 class="reveal">Comienza hoy tu<br>transformación digital</h2>
+  <p class="reveal">Escríbenos y te contamos cómo podemos hacer crecer tu negocio en el mundo digital.</p>
+  <a href="https://wa.me/56977691068" class="btn-primary reveal">¡Escríbenos hoy!</a>
+  <p class="cta-contact reveal" style="margin-top:3rem; padding-top:1rem;">También puedes contactarnos en <a href="mailto:moreconnected.ia@gmail.com">moreconnected.ia@gmail.com</a></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">moreconnected<span>.ia</span></div>
+  <p>© 2025 moreconnected.ia · Santiago, Chile</p>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/moreconnected.ia/" target="_blank" rel="noopener">Instagram</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
